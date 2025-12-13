@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SMTP Connection Tester
+
+A web application for testing SMTP server configurations, verifying credentials, and sending test emails. Built with Next.js and React.
+
+## Features
+
+- **Connection Testing** - Verify connectivity to SMTP servers with configurable timeouts
+- **Authentication Verification** - Validate SMTP credentials
+- **Test Email Sending** - Send styled HTML test emails to verify end-to-end configuration
+- **Security Options** - Support for STARTTLS (port 587), SSL/TLS (port 465), and unencrypted (port 25) connections
+- **Form Persistence** - Saves configuration (except passwords) to localStorage between sessions
+- **Quick Reference** - Built-in configuration cards for Gmail, Outlook, Yahoo, and SendGrid
+- **Dark Mode** - Full dark mode support
+
+## Tech Stack
+
+- **Next.js 16** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript 5** - Type-safe code
+- **Tailwind CSS 4** - Styling
+- **Nodemailer 7** - SMTP client
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- pnpm (recommended) or npm
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clone the repository
+git clone <repository-url>
+cd smtp-tester-nextjs
+
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm build
+pnpm start
+```
 
-## Learn More
+## Usage
 
-To learn more about Next.js, take a look at the following resources:
+1. Enter your SMTP server details (host, port)
+2. Select security type - port adjusts automatically
+3. Enter credentials (username and password)
+4. Optionally add sender details and test recipient email
+5. Click "Test SMTP Connection"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Results display connection status, authentication status, and email delivery status with detailed error messages if any step fails.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── api/smtp-test/route.ts   # SMTP testing API endpoint
+│   ├── layout.tsx               # Root layout with fonts
+│   ├── page.tsx                 # Home page with info cards
+│   └── globals.css              # Global styles
+└── components/
+    └── SMTPTestForm.tsx         # Main form component
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Security
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Credentials are used only during testing and never stored on the server
+- Passwords are never persisted to localStorage
+- Connections close immediately after testing
+- 10-second timeout protection on all operations
+
+## License
+
+MIT
